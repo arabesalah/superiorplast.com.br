@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Cadeira Bistro Plastica",
+    "price": "R$ 44,90 à vista",
+    "image": "assets/images/Cadeira Bistrô Preta.jpg",
+    "description": "Cadeira econômica e resistente",
+    "features": "Duas cores: Preto ou Branco; Capacidade de Resistencia de até 182kg; Leve; Fácil de empilhar; Aprovada pelo INMETRO"
+  },
+  {
+    "id": 2,
+    "name": "Poltrona Plastica",
+    "price": "R$ 54,90 à vista",
+    "image": "assets/images/Cadeira Poltrona Preta.jpg",
+    "description": "Poltrona com braços de apoio e maior conforto.",
+    "features": "Duas cores: Preto ou Branco; Maior conforto; Resistencia até 182kg; Braços de apoio; Aprovada pelo INMETRO"
+  },
+  {
+    "id": 3,
+    "name": "Poltrona XL Plastica",
+    "price": "R$ 64,90 à vista",
+    "image": "assets/images/Cadeira Robusta XL Preta.jpg",
+    "description": "Versão XL com conforto extra.",
+    "features": "Duas cores: Preto ou Branco; Maior conforto; Resistencia até 182kg; Braços de apoio; Aprovada pelo INMETRO"
+  },
+  {
+    "id": 4,
+    "name": "Mesa Monobloco",
+    "price": "R$ 104,90 à vista",
+    "image": "assets/images/Mesa Monobloco Preta.jpg",
+    "description": "Mesa Monobloco Formato Quadrado e Empilhável.",
+    "features": "Duas cores: Preto ou Branco; Resistente; Leve; Fácil de empilhar; Aprovada pelo INMETRO"
+  }
+]

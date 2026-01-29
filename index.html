@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superior Plast - Cadeiras e Mesas de Qualidade</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/img.logosuperiorplast.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="assets/images/img.logosuperiorplast.jpg" alt="Logo Superior Plast" class="logo">
+                <h1>Superior Plast</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Bem-vindo à Superior Plast</h2>
+            <p>Cadeiras e mesas de alta qualidade para sua casa ou negócio</p>
+            <button class="btn btn-primary" onclick="document.getElementById('produtos').scrollIntoView({behavior: 'smooth'})">
+                Conheça Nossos Produtos
+            </button>
+        </div>
+    </section>
+
+    <!-- Produtos Section -->
+    <section id="produtos" class="produtos">
+        <div class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            
+            <!-- Produtos carregados dinamicamente via API -->
+            <div class="categoria">
+                <div class="grid-produtos" id="products-grid">
+                    <!-- cards inseridos por assets/js/products.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <h2 class="section-title">Sobre a Superior Plast</h2>
+            <div class="sobre-content">
+                <div class="sobre-text">
+                    <p>A Superior Plast é sua solução completa em móveis de qualidade. Com anos de experiência no mercado, nos dedicamos a oferecer produtos modernos, duráveis e com preços acessíveis.</p>
+                    <p>Nossa missão é transformar ambientes com móveis que combinam design, conforto e funcionalidade.</p>
+                    <ul class="vantagens">
+                        <li><i class="fas fa-check"></i> Produtos de alta qualidade</li>
+                        <li><i class="fas fa-check"></i> Preços competitivos</li>
+                        <li><i class="fas fa-check"></i> Entrega rápida</li>
+                        <li><i class="fas fa-check"></i> Atendimento personalizado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="contato">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contato-content">
+                <form class="contato-form" id="contatoForm">
+                    <input type="text" placeholder="Seu Nome" required>
+                    <input type="email" placeholder="Seu Email" required>
+                    <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+                <div class="contato-info">
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(11) 9999-9999</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contato@superiorplast.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>São Paulo, SP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Superior Plast. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/products.js"></script>
+</body>
+</html>
