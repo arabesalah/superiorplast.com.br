@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "minify:css": "npx csso assets/css/style.css -o assets/css/style.min.css",
+    "minify:js": "npx terser assets/js/script.js -c -m -o assets/js/script.min.js && npx terser assets/js/products.js -c -m -o assets/js/products.min.js && npx terser assets/js/product.js -c -m -o assets/js/product.min.js",
+    "build": "npm run minify:css && npm run minify:js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "csso-cli": "^3.0.0",
+    "sharp": "^0.34.5",
+    "terser": "^5.31.0"
+  }
+}

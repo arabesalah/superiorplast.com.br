@@ -1,8 +1,15 @@
+
+// Importa funções utilitárias
+import { getWhatsAppLink, preferWebp, ehLogo } from './utils.js';
+
+// Módulo de página de produto
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   const waNumber = '551991842811';
   const waGreeting = 'Olá, Tenho Interesse e queria mais Informações, por favor.';
+
+  const preferWebp = (src) => src || '';
 
   const container = document.getElementById('product-detail');
   if (!id || !container) {
@@ -12,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchProduct() {
     try {
-      const res = await fetch(`http://localhost:3000/api/products/${id}`);
+      const res = await fetch(`/api/products/${id}`);
       if (res.ok) return await res.json();
       throw new Error('API não disponível');
     } catch (err) {
@@ -35,7 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return `https://web.whatsapp.com/send?phone=${waNumber}&text=${encoded}`;
   }
 
+  const ehLogo = (src = '') => src.toLowerCase().includes('logosuperiorplast');
+
   fetchProduct().then(p => {
+    console.log('Produto carregado:', p);
+    console.log('Imagem do produto:', p.image);
     if (!p) {
       container.innerHTML = '<p>Produto não encontrado.</p>';
       return;
@@ -46,16 +57,37 @@ document.addEventListener('DOMContentLoaded', () => {
       1: { 'Preto': 'assets/images/Cadeira Bistrô Preta.jpg', 'Branco': 'assets/images/Cadeira Bistrô Branca.jpg' },
       2: { 'Preto': 'assets/images/Cadeira Poltrona Preta.jpg', 'Branco': 'assets/images/Cadeira Poltrona Branca.jpg' },
       3: { 'Preto': 'assets/images/Cadeira Robusta XL Preta.jpg', 'Branco': 'assets/images/Cadeira Robusta XL Branca.jpg' },
-      4: { 'Preto': 'assets/images/Mesa Monobloco Preta.jpg', 'Branco': 'assets/images/Mesa Monobloco Preta.jpg' }
+      4: { 'Preto': 'assets/images/Mesa Monobloco Preta.jpg', 'Branco': 'assets/images/Mesa Monobloco Branca.jpg' }
+    };
+
+    const imagemPrincipal = !p.image || ehLogo(p.image) ? 'assets/images/img.logosuperiorplast.jpg' : p.image;
+    const imagemPrincipalWebp = preferWebp(imagemPrincipal);
+    const objectFit = (p.id === 1 || p.id === 2 || p.id === 3 || p.id === 4) ? 'contain' : 'cover';
+    const imgBg = (p.id === 1 || p.id === 2 || p.id === 3 || p.id === 4) ? '#fff' : 'transparent';
+    const featuresList = Array.isArray(p.features)
+      ? p.features.map(f => f.trim()).filter(Boolean)
+      : (String(p.features || '').split(';').map(f => f.trim()).filter(Boolean));
+    const caracteristicasList = Array.isArray(p.caracteristicas)
+      ? p.caracteristicas.map(c => c.trim()).filter(Boolean)
+      : (String(p.caracteristicas || '').split(';').map(c => c.trim()).filter(Boolean));
+    const categoryLabel = p.category ? `<span class="badge" style="background:rgba(37,211,102,0.15);color:var(--primary-color);font-weight:700;padding:0.35rem 0.8rem;border-radius:999px;font-size:0.9rem;">${p.category}</span>` : '';
+    const buildList = (items = []) => {
+      if (!items.length) return '<p style="color:var(--text-light);margin:0">Sem informações adicionais.</p>';
+      return items.map(item => `<div style="margin-bottom:0.55rem; display:flex;align-items:center;gap:0.5rem;font-size:1rem;">✓ <span>${item}</span></div>`).join('');
     };
 
     container.innerHTML = `
-      <div class="produto-card" style="display:flex;gap:3rem;align-items:flex-start;padding:2rem;">
-        <div class="produto-imagem" style="flex:1;min-width:360px;height:360px;border-radius:12px;overflow:hidden;">
-          <img id="produto-img" src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;"/>
+      <div class="produto-card" style="display:flex;flex-direction:row;align-items:flex-start;gap:2.5rem;padding:2rem;">
+        <div class="produto-imagem" style="flex:1;min-width:300px;max-width:400px;height:300px;border-radius:12px;overflow:hidden;">
+          <picture id="produto-picture">
+            <img id="produto-img" src="${imagemPrincipal}" alt="${p.name}" width="400" height="300" loading="lazy" decoding="async" data-default="${imagemPrincipal}" data-default-webp="${imagemPrincipalWebp}" style="width:100%;height:100%;object-fit:${objectFit};background:${imgBg};pointer-events:none;${imagemPrincipal ? '' : 'display:none;'}" onerror="this.src='assets/images/img.logosuperiorplast.jpg'; this.style.display='block';"/>
+          </picture>
         </div>
         <div style="flex:1.3;display:flex;flex-direction:column;justify-content:flex-start;">
-          <h2 style="color:var(--primary-color);font-size:2.2rem;margin-bottom:0.8rem;line-height:1.3;">${p.name}</h2>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
+            <h2 style="color:var(--primary-color);font-size:2.2rem;margin:0;line-height:1.3;">${p.name}</h2>
+            ${categoryLabel}
+          </div>
           <p class="preco" style="font-size:2.2rem;font-weight:900;margin:0.5rem 0 0.3rem 0;color:#25D366;">${p.price}</p>
           <p style="font-size:0.95rem;color:var(--text-light);margin:0 0 1.5rem 0;font-style:italic;">Para mais informações e condições de pagamento entre em contato conosco</p>
           
@@ -66,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="margin-bottom:2rem;">
             <p style="font-size:1.3rem;font-weight:700;color:var(--primary-color);margin-bottom:1rem;">Características:</p>
             <div style="font-size:1.1rem;color:var(--text-dark);line-height:2;padding-left:1rem;">
-              ${(p.features||'').split(';').map(f => f.trim()).filter(f => f).map(f => `<div style="margin-bottom:0.5rem;">✓ ${f}</div>`).join('')}
+              ${buildList(featuresList)}
             </div>
           </div>
 
@@ -92,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           
           <div style="margin-top:2rem;">
-            <a id="whatsapp-btn" class="btn btn-whatsapp" href="#" target="_blank" style="padding:14px 24px;font-size:1.1rem;border-radius:12px;cursor:pointer;">
+            <a id="whatsapp-btn" class="btn btn-whatsapp" href="#" target="_blank" aria-label="Comprar ${p.name} via WhatsApp" style="padding:14px 24px;font-size:1.1rem;border-radius:12px;cursor:pointer;">
               <i class="fab fa-whatsapp"></i>
               <span>Comprar via WhatsApp</span>
             </a>
@@ -106,6 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const whatsappBtn = document.getElementById('whatsapp-btn');
     const produtoImg = document.getElementById('produto-img');
 
+    // Prevenir clique na imagem
+    produtoImg.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
     function updateWhatsAppLink() {
       const cor = document.querySelector('input[name="cor"]:checked')?.value || '';
       let mensagem = waGreeting + ' Tenho interesse no ' + p.name + ' ' + p.price;
@@ -115,7 +153,15 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Atualizar imagem quando cor muda
       if (cor && imagensPorCor[p.id] && imagensPorCor[p.id][cor]) {
-        produtoImg.src = imagensPorCor[p.id][cor];
+        const novaImg = imagensPorCor[p.id][cor];
+        produtoImg.src = novaImg;
+        produtoImg.dataset.default = novaImg;
+        produtoImg.dataset.defaultWebp = novaImg;
+        produtoImg.style.display = 'block';
+      } else if (!imagemPrincipal) {
+        produtoImg.style.display = 'none';
+      } else {
+        produtoImg.src = imagemPrincipal;
       }
     }
 

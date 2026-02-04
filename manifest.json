@@ -1,0 +1,31 @@
+{
+  "name": "Superior Plast",
+  "short_name": "SuperiorPlast",
+  "description": "Site institucional e catálogo de produtos da Superior Plast.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f2f2f6",
+  "theme_color": "#6B2C91",
+  "icons": [
+    {
+      "src": "assets/images/img.logosuperiorplast.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "assets/images/img.logosuperiorplast.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+    {
+      "src": "assets/images/img.logosuperiorplast.jpg",
+      "sizes": "256x256",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/images/img.logosuperiorplast.jpg",
+      "sizes": "384x384",
+      "type": "image/jpeg"
+    }
+  ]
+}
