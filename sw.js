@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sp-cache-v14';
+const CACHE_NAME = 'sp-cache-v15';
 const PRECACHE_URLS = [
   '/',
   '/index.html',

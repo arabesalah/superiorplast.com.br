@@ -1,7 +1,21 @@
 @media (max-width: 600px) {
+  body {
+    padding-top: var(--topbar-height) !important;
+  }
+
+  .header-topo {
+    position: static !important;
+    top: auto !important;
+  }
+
+  .topo-contato {
+    position: fixed !important;
+    top: 0 !important;
+  }
+
   /* Carrossel abaixo do topo */
   .navbar {
-    margin-top: calc(var(--topbar-height) + 120px) !important;
+    margin-top: 12px !important;
   }
 
   #navbar-frases-container {
@@ -34,6 +48,10 @@
 
   .carousel-image.active {
     display: block !important;
+  }
+
+  .logo-img-topo {
+    height: 90px !important;
   }
 
   /* Produtos e conjuntos em 3 colunas */
