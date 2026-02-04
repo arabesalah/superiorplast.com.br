@@ -1,0 +1,84 @@
+@media (max-width: 600px) {
+  /* Carrossel abaixo do topo */
+  .navbar {
+    margin-top: calc(var(--topbar-height) + 120px) !important;
+  }
+
+  #navbar-frases-container {
+    display: none !important;
+  }
+
+  .carousel-navbar {
+    height: auto !important;
+    padding: 12px !important;
+  }
+
+  .carousel-multi {
+    height: auto !important;
+    min-height: 200px !important;
+  }
+
+  .carousel-image {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 92vw !important;
+    max-width: 360px !important;
+    height: 190px !important;
+    max-height: 190px !important;
+    margin: 0 auto !important;
+    display: none !important;
+    opacity: 1 !important;
+  }
+
+  .carousel-image.active {
+    display: block !important;
+  }
+
+  /* Produtos e conjuntos em 3 colunas */
+  .grid-produtos {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .grid-produtos .produto-card,
+  .combos-grid .produto-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .produto-imagem {
+    height: 90px !important;
+    padding: 4px !important;
+  }
+
+  .produto-card h4 {
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    padding: 0.6rem 0.6rem 0.3rem !important;
+  }
+
+  .produto-card .preco {
+    font-size: 0.8rem !important;
+  }
+
+  .produto-card .descricao,
+  .produto-card p {
+    font-size: 0.7rem !important;
+  }
+
+  .produto-actions {
+    gap: 6px !important;
+    padding: 0 0.6rem 0.8rem !important;
+  }
+
+  .btn,
+  .btn-ghost,
+  .btn-whatsapp {
+    font-size: 0.7rem !important;
+    padding: 6px 8px !important;
+  }
+}

@@ -1,8 +1,9 @@
-const CACHE_NAME = 'sp-cache-v13';
+const CACHE_NAME = 'sp-cache-v14';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/assets/css/style.css',
+  '/assets/css/mobile-fix.css',
   '/assets/js/script.min.js',
   '/assets/js/products.min.js',
   '/assets/js/product.min.js',
