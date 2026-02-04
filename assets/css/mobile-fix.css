@@ -119,6 +119,27 @@
     font-size: 0.7rem !important;
   }
 
+  .descricao-mobile {
+    position: relative !important;
+    transition: max-height 0.2s ease !important;
+  }
+
+  .descricao-mobile.is-collapsed {
+    max-height: 4.8em !important;
+    overflow: hidden !important;
+  }
+
+  .descricao-toggle {
+    margin: 0 0.6rem 0.8rem !important;
+    padding: 4px 8px !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+    background: transparent !important;
+    border: 1px solid rgba(107,44,145,0.3) !important;
+    border-radius: 999px !important;
+  }
+
   .produto-actions {
     gap: 6px !important;
     padding: 0 0.6rem 0.8rem !important;

@@ -113,6 +113,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function applyMobileDescriptionToggle(descEl) {
+    if (!descEl) return;
+    if (!window.matchMedia('(max-width: 600px)').matches) return;
+    const textLength = descEl.textContent?.trim().length || 0;
+    if (textLength < 140) return;
+    descEl.classList.add('descricao-mobile', 'is-collapsed');
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'descricao-toggle';
+    toggle.textContent = 'Ver mais';
+    toggle.addEventListener('click', () => {
+      const isCollapsed = descEl.classList.toggle('is-collapsed');
+      toggle.textContent = isCollapsed ? 'Ver mais' : 'Ver menos';
+    });
+    descEl.parentElement?.appendChild(toggle);
+  }
+
   function renderProducts(productsList) {
     const dataset = Array.isArray(productsList) ? productsList : [];
     grid.innerHTML = '';
@@ -222,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       desc.innerHTML = descHtml;
+      applyMobileDescriptionToggle(desc);
 
       const actions = document.createElement('div');
       actions.className = 'produto-actions';
@@ -587,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.appendChild(actions);
 
       combosGrid.appendChild(card);
+      applyMobileDescriptionToggle(desc);
     });
 
     // Eventos de cor para combos
