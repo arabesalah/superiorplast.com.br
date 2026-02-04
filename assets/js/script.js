@@ -26,16 +26,16 @@ function iniciarFrasesNavbarIndependentes() {
     container.innerHTML = '';
     const navbarRect = navbar.getBoundingClientRect();
     const isMobile = window.innerWidth <= 600;
-    const fraseWidth = isMobile ? 200 : 320;
-    const fraseHeight = isMobile ? 40 : 48;
-    const padding = isMobile ? 8 : 16;
-    const sideInset = isMobile ? 10 : 60;
-    const centerBuffer = isMobile ? 30 : 120;
+    const fraseWidth = isMobile ? 180 : 320;
+    const fraseHeight = isMobile ? 36 : 48;
+    const padding = isMobile ? 6 : 16;
+    const sideInset = isMobile ? 6 : 60;
+    const centerBuffer = isMobile ? 10 : 120;
     const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
     const top1 = clamp(navbarRect.height * 0.2 - fraseHeight / 2, padding, navbarRect.height - fraseHeight - padding);
     const top2 = clamp(navbarRect.height * 0.8 - fraseHeight / 2, padding, navbarRect.height - fraseHeight - padding);
-    const leftL = padding + sideInset/2;
-    const leftR = navbarRect.width - fraseWidth - padding - sideInset - centerBuffer;
+    const leftL = padding + sideInset / 2;
+    const leftR = Math.max(padding, navbarRect.width - fraseWidth - padding - sideInset - centerBuffer);
     const posicoes = [
         {left: leftL, top: top1}, // Esquerda 1
         {left: leftL, top: top2}, // Esquerda 2
