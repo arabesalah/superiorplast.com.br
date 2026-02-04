@@ -1,6 +1,6 @@
 @media (max-width: 600px) {
   body {
-    padding-top: var(--topbar-height) !important;
+    padding-top: calc(var(--topbar-height) + 48px) !important;
   }
 
   .header-topo {
@@ -22,17 +22,22 @@
   .topo-contato {
     position: fixed !important;
     top: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 12px !important;
   }
 
   .topo-contato-inner {
     flex-direction: column !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 6px !important;
   }
 
   .topo-left {
     justify-content: center !important;
     text-align: center !important;
+    flex-direction: column !important;
+    gap: 4px !important;
   }
 
   .topo-center {
