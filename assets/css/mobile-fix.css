@@ -43,6 +43,7 @@
   #navbar-frases-container {
     display: block !important;
     padding: 0 8px !important;
+    z-index: 30 !important;
   }
 
   .carousel-navbar {
@@ -67,10 +68,15 @@
     margin: 0 auto !important;
     display: none !important;
     opacity: 1 !important;
+    z-index: 5 !important;
   }
 
   .carousel-image.active {
     display: block !important;
+  }
+
+  .navbar-frase-destaque {
+    z-index: 40 !important;
   }
 
   .navbar-frase-destaque {
