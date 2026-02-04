@@ -104,19 +104,21 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .topo-left {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 .topo-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: static;
+    transform: none;
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    margin-left: auto;
 }
 .logo-topo-info {
     margin-top: 0;

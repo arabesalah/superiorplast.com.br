@@ -20,6 +20,21 @@
     top: 0 !important;
   }
 
+  .topo-contato-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .topo-left {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .topo-center {
+    margin-left: 0 !important;
+  }
+
   /* Carrossel abaixo do topo */
   .navbar {
     margin-top: 0 !important;
