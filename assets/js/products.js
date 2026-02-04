@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCollapsed = descEl.classList.toggle('is-collapsed');
       toggle.textContent = isCollapsed ? 'Ver mais' : 'Ver menos';
     });
-    descEl.parentElement?.appendChild(toggle);
+    descEl.insertAdjacentElement('afterend', toggle);
   }
 
   function renderProducts(productsList) {

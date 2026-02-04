@@ -122,11 +122,14 @@
   .descricao-mobile {
     position: relative !important;
     transition: max-height 0.2s ease !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
   }
 
   .descricao-mobile.is-collapsed {
     max-height: 4.8em !important;
     overflow: hidden !important;
+    -webkit-line-clamp: 3 !important;
   }
 
   .descricao-toggle {
@@ -138,6 +141,9 @@
     background: transparent !important;
     border: 1px solid rgba(107,44,145,0.3) !important;
     border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .produto-actions {
