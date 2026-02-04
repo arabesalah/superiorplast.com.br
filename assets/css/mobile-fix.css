@@ -6,6 +6,13 @@
   .header-topo {
     position: static !important;
     top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .logo-topo-info {
+    position: static !important;
+    margin-top: 0 !important;
   }
 
   .topo-contato {
@@ -15,7 +22,7 @@
 
   /* Carrossel abaixo do topo */
   .navbar {
-    margin-top: 12px !important;
+    margin-top: 0 !important;
   }
 
   #navbar-frases-container {
