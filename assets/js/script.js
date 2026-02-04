@@ -25,11 +25,12 @@ function iniciarFrasesNavbarIndependentes() {
     if (!container || !navbar) return;
     container.innerHTML = '';
     const navbarRect = navbar.getBoundingClientRect();
-    const fraseWidth = 320;
-    const fraseHeight = 48;
-    const padding = 16;
-    const sideInset = 60;
-    const centerBuffer = 120;
+    const isMobile = window.innerWidth <= 600;
+    const fraseWidth = isMobile ? 200 : 320;
+    const fraseHeight = isMobile ? 40 : 48;
+    const padding = isMobile ? 8 : 16;
+    const sideInset = isMobile ? 10 : 60;
+    const centerBuffer = isMobile ? 30 : 120;
     const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
     const top1 = clamp(navbarRect.height * 0.2 - fraseHeight / 2, padding, navbarRect.height - fraseHeight - padding);
     const top2 = clamp(navbarRect.height * 0.8 - fraseHeight / 2, padding, navbarRect.height - fraseHeight - padding);

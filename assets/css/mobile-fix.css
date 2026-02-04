@@ -26,7 +26,8 @@
   }
 
   #navbar-frases-container {
-    display: none !important;
+    display: block !important;
+    padding: 0 8px !important;
   }
 
   .carousel-navbar {
@@ -55,6 +56,14 @@
 
   .carousel-image.active {
     display: block !important;
+  }
+
+  .navbar-frase-destaque {
+    font-size: 0.85rem !important;
+    max-width: 220px !important;
+    min-width: 160px !important;
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
   }
 
   .logo-img-topo {
