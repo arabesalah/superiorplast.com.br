@@ -1,0 +1,13 @@
+{
+  "name": "superiorplast-site",
+  "version": "1.0.0",
+  "description": "Site da Superiorplast com frontend e backend de produtos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "start http://localhost:3000 && node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
