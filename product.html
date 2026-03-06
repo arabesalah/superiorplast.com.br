@@ -4,16 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produto - Superior Plast</title>
-  <link rel="stylesheet" href="assets/css/style.css?v=13">
-  <link rel="stylesheet" href="assets/css/mobile-fix.css?v=14">
+  <meta name="description" content="Detalhes do produto Superior Plast com preco, cores e especificacoes." />
+  <meta name="theme-color" content="#0b1f4d" />
+  <link rel="canonical" href="/product.html" />
+  <link rel="icon" href="assets/images/img.logosuperiorplast.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="assets/css/style.css?v=13"> -->
+  <link rel="stylesheet" href="assets/css/style-limpo.css?v=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <section class="produto-detalhe">
-    <div class="container" id="product-detail">
-      <!-- Detalhes carregados por assets/js/product.js -->
+  <header class="product-header">
+    <div class="product-header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/images/logo superior@2x.png" alt="Logo Superior Plast" width="64" height="64" loading="lazy" />
+        <strong>Superior Plast</strong>
+      </a>
+      <a class="btn-ghost" href="index.html#unidades">Voltar ao catalogo</a>
     </div>
-  </section>
+  </header>
+
+  <main class="product-shell" id="product-detail" aria-live="polite">
+    <!-- Detalhes carregados por assets/js/product.js -->
+  </main>
+
+  <script type="application/ld+json" id="product-schema">{}</script>
 
   <script type="module" src="assets/js/product.js?v=9"></script>
 </body>

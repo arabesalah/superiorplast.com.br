@@ -1,7 +1,5 @@
 
-// Importa dados de combos e funções utilitárias
-import { combos } from './combos.js';
-import { getWhatsAppLink, preferWebp } from './utils.js';
+
 
 // Módulo principal de produtos
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,52 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return `https://web.whatsapp.com/send?phone=${waNumber}&text=${encoded}`;
   }
   const grid = document.getElementById('products-grid');
-  const combosGrid = document.getElementById('combos-grid');
   if (!grid) return;
-
-  const combos = [
-    {
-      id: 101,
-      name: 'Conjunto Cadeira Bistrô',
-      price: 'R$ 279,90 à vista',
-      image: 'assets/images/Conjunto Cadeira Bistrô Branca.jpg',
-      description: 'Kit pronto com cadeiras Bistrô para equipar ambientes com praticidade.',
-      features: [
-        'Duas cores: Preto ou Branco',
-        'Capacidade de Resistencia de até 182kg',
-        'Leve',
-        'Fácil de empilhar',
-        'Aprovada pelo INMETRO'
-      ]
-    },
-    {
-      id: 102,
-      name: 'Conjunto Cadeira Poltrona',
-      price: 'R$ 319,90 à vista',
-      image: 'assets/images/Conjunto Cadeira Poltrona Branca.jpg',
-      description: 'Kit de poltronas com braços de apoio, perfeito para receber com conforto.',
-      features: [
-        'Duas cores: Preto ou Branco',
-        'Capacidade de Resistencia de até 182kg',
-        'Braços de apoio',
-        'Aprovada pelo INMETRO'
-      ]
-    },
-    {
-      id: 103,
-      name: 'Conjunto Cadeira Poltrona XL',
-      price: 'R$ 359,90 à vista',
-      image: 'assets/images/Conjunto Cadeira Robusta XL Branca.jpg',
-      description: 'Kit XL com conforto extra para áreas de grande circulação.',
-      features: [
-        'Duas cores: Preto ou Branco',
-        'Capacidade de Resistencia de até 182kg',
-        'Braços de apoio',
-        'Maior conforto',
-        'Aprovada pelo INMETRO'
-      ]
-    }
-  ];
 
   const filterDefinitions = [
     { id: 'all', label: 'Todos os produtos' },
@@ -75,6 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'poltrona', label: 'Poltronas' },
     { id: 'mesa', label: 'Mesas' }
   ];
+  const categoryLabelMap = filterDefinitions.reduce((acc, def) => {
+    acc[def.id] = def.label;
+    return acc;
+  }, {});
+  const getCategoryLabel = (category) => categoryLabelMap[category] || category || 'Linha';
   const filtersContainer = document.getElementById('products-filters');
   const searchInput = document.getElementById('products-search');
   const searchHints = document.getElementById('products-search-hints');
@@ -130,6 +88,85 @@ document.addEventListener('DOMContentLoaded', () => {
     descEl.insertAdjacentElement('afterend', toggle);
   }
 
+  function normalizeText(value) {
+    if (!value) return '';
+    return String(value).replace(/\s+/g, ' ').trim();
+  }
+
+  function shortenText(value, maxLength = 90) {
+    const clean = normalizeText(value);
+    if (clean.length <= maxLength) return clean;
+    const sliced = clean.slice(0, maxLength);
+    const lastSpace = sliced.lastIndexOf(' ');
+    return `${(lastSpace > 40 ? sliced.slice(0, lastSpace) : sliced).trim()}...`;
+  }
+
+  function buildShortDescription(product) {
+    const candidates = [
+      product?.description,
+      Array.isArray(product?.features) ? product.features.join(' ') : product?.features,
+      Array.isArray(product?.caracteristicas) ? product.caracteristicas.join(' ') : null
+    ].filter(Boolean);
+    return shortenText(candidates[0] || '', 70);
+  }
+
+  function getFeatureList(product) {
+    const list = [];
+    if (product?.features) {
+      const features = Array.isArray(product.features) ? product.features : String(product.features).split(/;\s*/);
+      list.push(...features);
+    }
+    if (Array.isArray(product?.caracteristicas)) {
+      list.push(...product.caracteristicas);
+    }
+    return list
+      .map((item) => normalizeText(item))
+      .filter(Boolean)
+      .filter((item) => !(item.toLowerCase().includes('preto') && item.toLowerCase().includes('branco')));
+  }
+
+  function createColorButtons(product) {
+    const raw = [];
+    if (product?.features) {
+      const features = Array.isArray(product.features) ? product.features : String(product.features).split(/;\s*/);
+      raw.push(...features);
+    }
+    if (Array.isArray(product?.caracteristicas)) {
+      raw.push(...product.caracteristicas);
+    }
+    const hasColors = raw
+      .map((item) => normalizeText(item).toLowerCase())
+      .some((feature) => feature.includes('preto') && feature.includes('branco'));
+    if (!hasColors) return null;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'produto-mobile-colors';
+    ['Preto', 'Branco'].forEach(cor => {
+      const span = document.createElement('span');
+      span.className = 'cor-hover';
+      span.dataset.cor = cor;
+      span.dataset.produtoId = product.id;
+      span.textContent = cor;
+      wrapper.appendChild(span);
+    });
+    return wrapper;
+  }
+
+  function createWhatsAppButton(product, label = 'Comprar via WhatsApp') {
+    const a = document.createElement('a');
+    a.className = 'btn btn-whatsapp';
+    a.target = '_blank';
+    const message = `${waGreeting} Tenho interesse no ${product.name} ${product.price}. Como faço para comprar?`;
+    a.href = getWhatsAppLink(message);
+    a.setAttribute('aria-label', `Comprar ${product.name} via WhatsApp`);
+    const icon = document.createElement('i');
+    icon.className = 'fab fa-whatsapp';
+    const span = document.createElement('span');
+    span.textContent = label;
+    a.appendChild(icon);
+    a.appendChild(span);
+    return a;
+  }
+
   function renderProducts(productsList) {
     const dataset = Array.isArray(productsList) ? productsList : [];
     grid.innerHTML = '';
@@ -142,29 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = 'produto-card';
       card.dataset.id = p.id;
 
-      const imgDiv = document.createElement('div');
-      imgDiv.className = 'produto-imagem';
-      const picture = document.createElement('picture');
-      const webpSrc = preferWebp(p.image);
-      const img = document.createElement('img');
-      img.src = p.image && p.image !== 'assets/images/img.logosuperiorplast.jpg' ? p.image : '';
-      img.alt = p.name;
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.width = 320;
-      img.height = 180;
-      img.sizes = '(max-width: 768px) 90vw, 320px';
-      img.dataset.imagemPadrao = p.image || '';
-      img.dataset.imagemPadraoWebp = webpSrc || '';
-      img.onerror = function() {
-        this.style.display = 'block';
-        this.src = 'assets/images/img.logosuperiorplast.jpg';
-      };
-      if (!img.src) {
-        img.src = 'assets/images/img.logosuperiorplast.jpg';
-      }
-      picture.appendChild(img);
-      imgDiv.appendChild(picture);
+      // Imagem removida
 
       const title = document.createElement('h4');
       title.innerHTML = highlightText(p.name);
@@ -174,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price.textContent = p.price;
 
       const paymentInfo = document.createElement('p');
+      paymentInfo.className = 'payment-info';
       paymentInfo.style.cssText = 'font-size:0.9rem;color:var(--text-light);margin-top:0.5rem;margin-bottom:1rem;font-style:italic;';
       paymentInfo.textContent = 'Para mais informações e condições de pagamento entre em contato conosco';
 
@@ -249,21 +265,35 @@ document.addEventListener('DOMContentLoaded', () => {
       detalhes.href = `product.html?id=${p.id}`;
       detalhes.textContent = 'Ver detalhes';
 
-      const a = document.createElement('a');
-      a.className = 'btn btn-whatsapp';
-      a.target = '_blank';
-      const message = `${waGreeting} Tenho interesse no ${p.name} ${p.price}. Como faço para comprar?`;
-      a.href = getWhatsAppLink(message);
-      a.setAttribute('aria-label', `Comprar ${p.name} via WhatsApp`);
-      const icon = document.createElement('i');
-      icon.className = 'fab fa-whatsapp';
-      const span = document.createElement('span');
-      span.textContent = 'Comprar via WhatsApp';
-      a.appendChild(icon);
-      a.appendChild(span);
+      const a = createWhatsAppButton(p);
 
       actions.appendChild(detalhes);
       actions.appendChild(a);
+
+      const mobileLayout = document.createElement('div');
+      mobileLayout.className = 'produto-mobile';
+      const mobileDesc = document.createElement('p');
+      mobileDesc.className = 'descricao-curta';
+      mobileDesc.textContent = normalizeText(p.description || buildShortDescription(p));
+      const mobileColors = createColorButtons(p);
+      const mobileFeatures = document.createElement('ul');
+      mobileFeatures.className = 'produto-mobile-features';
+      getFeatureList(p).forEach((feature) => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        if (feature.toLowerCase().includes('resistencia') || feature.toLowerCase().includes('182')) {
+          li.classList.add('feature-resistencia');
+        }
+        mobileFeatures.appendChild(li);
+      });
+      const mobileActions = document.createElement('div');
+      mobileActions.className = 'produto-mobile-actions';
+      const mobileWhatsapp = createWhatsAppButton(p, 'Chamar no WhatsApp');
+      mobileActions.appendChild(mobileWhatsapp);
+      mobileLayout.appendChild(mobileDesc);
+      if (mobileColors) mobileLayout.appendChild(mobileColors);
+      if (mobileFeatures.children.length) mobileLayout.appendChild(mobileFeatures);
+      mobileLayout.appendChild(mobileActions);
 
       card.addEventListener('click', (e) => {
         if (e.target.closest('.btn-whatsapp') || e.target.closest('.btn-ghost')) return;
@@ -275,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.appendChild(price);
       card.appendChild(paymentInfo);
       card.appendChild(desc);
+      card.appendChild(mobileLayout);
       card.appendChild(actions);
 
       grid.appendChild(card);
@@ -384,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
           type: 'product',
           value: product.name || '',
           label: product.name || 'Produto',
-          subtext: product.category ? `Categoria: ${product.category}` : (product.description || '')
+          subtext: product.category ? `Categoria: ${getCategoryLabel(product.category)}` : (product.description || '')
         });
       });
       if (!matches.length) {
@@ -536,6 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
       price.textContent = p.price;
 
       const paymentInfo = document.createElement('p');
+      paymentInfo.className = 'payment-info';
       paymentInfo.style.cssText = 'font-size:0.9rem;color:var(--text-light);margin-top:0.5rem;margin-bottom:1rem;font-style:italic;';
       paymentInfo.textContent = 'Para mais informações e condições de pagamento entre em contato conosco';
 
@@ -582,26 +614,41 @@ document.addEventListener('DOMContentLoaded', () => {
       const actions = document.createElement('div');
       actions.className = 'produto-actions';
 
-      const a = document.createElement('a');
-      a.className = 'btn btn-whatsapp';
-      a.target = '_blank';
-      const message = `${waGreeting} Tenho interesse no ${p.name} ${p.price}. Como faço para comprar?`;
-      a.href = getWhatsAppLink(message);
-      a.setAttribute('aria-label', `Comprar ${p.name} via WhatsApp`);
-      const icon = document.createElement('i');
-      icon.className = 'fab fa-whatsapp';
-      const span = document.createElement('span');
-      span.textContent = 'Comprar via WhatsApp';
-      a.appendChild(icon);
-      a.appendChild(span);
+      const a = createWhatsAppButton(p);
 
       actions.appendChild(a);
+
+      const mobileLayout = document.createElement('div');
+      mobileLayout.className = 'produto-mobile';
+      const mobileDesc = document.createElement('p');
+      mobileDesc.className = 'descricao-curta';
+      mobileDesc.textContent = normalizeText(p.description || buildShortDescription(p));
+      const mobileColors = createColorButtons(p);
+      const mobileFeatures = document.createElement('ul');
+      mobileFeatures.className = 'produto-mobile-features';
+      getFeatureList(p).forEach((feature) => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        if (feature.toLowerCase().includes('resistencia') || feature.toLowerCase().includes('182')) {
+          li.classList.add('feature-resistencia');
+        }
+        mobileFeatures.appendChild(li);
+      });
+      const mobileActions = document.createElement('div');
+      mobileActions.className = 'produto-mobile-actions';
+      const mobileWhatsapp = createWhatsAppButton(p, 'Chamar no WhatsApp');
+      mobileActions.appendChild(mobileWhatsapp);
+      mobileLayout.appendChild(mobileDesc);
+      if (mobileColors) mobileLayout.appendChild(mobileColors);
+      if (mobileFeatures.children.length) mobileLayout.appendChild(mobileFeatures);
+      mobileLayout.appendChild(mobileActions);
 
       card.appendChild(imgDiv);
       card.appendChild(title);
       card.appendChild(price);
       card.appendChild(paymentInfo);
       card.appendChild(desc);
+      card.appendChild(mobileLayout);
       card.appendChild(actions);
 
       combosGrid.appendChild(card);
